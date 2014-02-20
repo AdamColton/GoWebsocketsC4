@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Learning Go</title>
+    <script type="text/javascript">
+      var socket = new WebSocket("ws://localhost:8080/socket/");
+
+      socket.onopen = function(){
+        console.log("Socket has been opened!");
+      }
+
+      var game;
+      window.onload = function(){
+        game = document.getElementById("game");
+        socket.onmessage = function(msg){
+          game.innerHTML = "<br />" + msg.data;
+        }
+
+        var i;
+        var buttons = document.getElementsByTagName("button");
+        for(i in buttons){
+          buttons[i].onclick = function(){socket.send(this.innerHTML);}
+        }
+      }
+    </script>
+  </head>
+  <body id="body">
+    <pre id="game">
+    </pre>
+    <button>0</button>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+  </body>
+</html>
